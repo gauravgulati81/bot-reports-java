@@ -11,8 +11,9 @@ public class Reporting {
 	static Date date = new Date();
 	private static Formatter file;
 	private static FileWriter f;
-	private static String filePath = "Reports/Report_" + dateFormat.format(date)+".csv";
-	private static String htmlFilePath = filePath+".html";
+	private static String fileName = "Report_" + dateFormat.format(date);
+	private static String csvFilePath = "Reports/" + fileName + ".csv";
+	private static String htmlFilePath = "Reports/" + fileName + ".html";
 	private static String htmlHeader = "<html>" +
 	           "<body>" +
 	           "<table border = '1' align='center'>" +
@@ -31,7 +32,7 @@ public class Reporting {
 		new File("Reports").mkdirs();
 
 		try {
-			f = new FileWriter(filePath, true);
+			f = new FileWriter(csvFilePath, true);
 			file = new Formatter(f);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -46,7 +47,7 @@ public class Reporting {
 		new File("Reports").mkdirs();
 
 		try {
-			f = new FileWriter(filePath, true);
+			f = new FileWriter(csvFilePath, true);
 			file = new Formatter(f);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -61,7 +62,7 @@ public class Reporting {
 		new File("Reports").mkdirs();
 
 		try {
-			f = new FileWriter(filePath, true);
+			f = new FileWriter(csvFilePath, true);
 			file = new Formatter(f);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -75,7 +76,7 @@ public class Reporting {
 	public static void validateCondition(boolean condition, String testSummary) {
 		new File("Reports").mkdirs();
 		try {
-			f = new FileWriter(filePath, true);
+			f = new FileWriter(csvFilePath, true);
 			file = new Formatter(f);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
