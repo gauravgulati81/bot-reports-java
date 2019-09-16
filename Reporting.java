@@ -16,6 +16,7 @@ public class Reporting {
 	private static String htmlFilePath = "Reports/" + fileName + ".html";
 	private static String htmlHeader = "<html>" +
 	           "<body>" +
+	           "<h1 align='center'>"+ fileName +"</h1>" +
 	           "<table border = '1' align='center'>" +
 	           "<tr>" +
 	           "<th>Test Summary</th>" +
