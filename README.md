@@ -33,6 +33,8 @@ Executing any/all of the above methods will write the results in a csv file.
 
 - generateHTMLReport(): Call this method after the above methods have been executed, to generate the html report. Returns nothing.
 
+Refresh the project explorer after the script execution, in order to view new reports created inside the "Reports" directory
+
 
 Refer SampleTestCase.java for sample implementation.
 
