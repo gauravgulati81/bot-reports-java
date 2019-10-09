@@ -1,1 +1,22 @@
-<html><body><table border = '1' align='center'><tr><th>Test Summary</th><th>Test Status</th></tr><tr><td>Validating page title</td><td bgcolor='#32CD32'>PASS</td></tr><tr><td>Validating images link text</td><td bgcolor='#32CD32'>PASS</td></tr><tr><td>Validating presence of google drive link on google.com page</td><td bgcolor='#FF0000'>FAIL</td></tr><tr><td>Checking the presence of doodle on google.com page</td><td>BLOCKED</td></tr></table></body></html>
+<html><body><h1 align='center'>Report_064343</h1><table border = '1' align='center'><tr><th>S/N</th><th>Test Summary</th><th>Test Status</th></tr><tr><td>1</td><td>Validating page title</td><td bgcolor='#14dc50'>PASS</td></tr><tr><td>2</td><td>Validating images link text</td><td bgcolor='#14dc50'>PASS</td></tr><tr><td>3</td><td>Validating presence of google drive link on google.com page</td><td bgcolor='#dc143c'>FAIL</td></tr><tr><td>4</td><td>Checking the presence of doodle on google.com page</td><td bgcolor='#d3d3d3'>BLOCKED</td></tr></table><br><br><h2 align='center'>Summary</h2><center><b>Passed: 2<br>Failed: 1<br>Blocked: 1<b></center><div id='piechart' align='center'></div>
+<script type='text/javascript' src="https://www.gstatic.com/charts/loader.js"></script>
+<script type='text/javascript'>
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Status', 'PASS/FAIL/BLOCKED'],
+  ['PASS', 2],
+  ['FAIL', 1],
+  ['BLOCKED', 1]
+]);
+
+  var options = {'legend':{position: 'right', alignment: 'center', textStyle: {color: 'default', fontSize: 12}},
+  'width':650, 
+  'height':400, 
+  'colors': ['#14dc50', '#dc143c', '#d3d3d3']};
+
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
+</script></body></html>
