@@ -14,20 +14,18 @@ public class Reporting {
 	private static String fileName = "Report_" + dateFormat.format(date);
 	private static String csvFilePath = "Reports/" + fileName + ".csv";
 	private static String htmlFilePath = "Reports/" + fileName + ".html";
-	private static String htmlHeader = "<html>" +
-	           "<body>" +
-	           "<h1 align='center'>"+ fileName +"</h1>" +
-	           "<table border = '1' align='center'>" +
-	           "<tr>" +
-	           "<th>Test Summary</th>" +
-	           "<th>Test Status</th>" +
-	           "</tr>";
-	private static String htmlFooter = "</table>" +
-	           "</body>" +
-	           "</html>";
+	private static String htmlHeader = "<html>" + "<body>" + "<h1 align='center'>" + fileName + "</h1>"
+			+ "<table border = '1' align='center'>" + "<tr>" + "<th>S/N</th>" + "<th>Test Summary</th>"
+			+ "<th>Test Status</th>" + "</tr>";
+	private static String htmlFooter;
 	private static String htmlTableRows = "";
-	private static String cellColorGreen = "#32CD32";
-	private static String cellColorRed = "#FF0000";
+	private static String cellColorGreen = "#14dc50";
+	private static String cellColorRed = "#dc143c";
+	private static String cellColorGrey = "#d3d3d3";
+	private static int nPassed = 0;
+	private static int nFailed = 0;
+	private static int nBlocked = 0;
+	private static int tcCount = 0;
 
 	public static void setTestCasePass(String testSummary) {
 		new File("Reports").mkdirs();
@@ -39,8 +37,11 @@ public class Reporting {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		file.format("\"%s\",PASS\n", testSummary);
-		htmlTableRows = htmlTableRows + "<tr><td>"+testSummary+"</td><td bgcolor='"+cellColorGreen+"'>PASS</td></tr>";
+		tcCount++;
+		file.format("%d,%s,PASS\n", tcCount, testSummary);
+		htmlTableRows = htmlTableRows + "<tr><td>" + tcCount + "</td><td>" + testSummary + "</td><td bgcolor='"
+				+ cellColorGreen + "'>PASS</td></tr>";
+		nPassed++;
 		file.close();
 	}
 
@@ -54,8 +55,11 @@ public class Reporting {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		file.format("\"%s\",FAIL\n", testSummary);
-		htmlTableRows = htmlTableRows + "<tr><td>"+testSummary+"</td><td bgcolor='"+cellColorRed+"'>FAIL</td></tr>";
+		tcCount++;
+		file.format("%d,%s,FAIL\n", tcCount, testSummary);
+		htmlTableRows = htmlTableRows + "<tr><td>" + tcCount + "</td><td>" + testSummary + "</td><td bgcolor='"
+				+ cellColorRed + "'>FAIL</td></tr>";
+		nFailed++;
 		file.close();
 	}
 
@@ -69,8 +73,11 @@ public class Reporting {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		file.format("\"%s\",BLOCKED\n", testSummary);
-		htmlTableRows = htmlTableRows + "<tr><td>"+testSummary+"</td><td>BLOCKED</td></tr>";
+		tcCount++;
+		file.format("%d,%s,BLOCKED\n", tcCount, testSummary);
+		htmlTableRows = htmlTableRows + "<tr><td>" + tcCount + "</td><td>" + testSummary + "</td><td bgcolor='"
+				+ cellColorGrey + "'>BLOCKED</td></tr>";
+		nBlocked++;
 		file.close();
 	}
 
@@ -83,19 +90,37 @@ public class Reporting {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		tcCount++;
 		if (condition == true) {
-			file.format("\"%s\",PASS\n", testSummary);
-			htmlTableRows = htmlTableRows + "<tr><td>"+testSummary+"</td><td bgcolor='"+cellColorGreen+"'>PASS</td></tr>";
-		}
-		else {
-			file.format("\"%s\",FAIL\n", testSummary);
-			htmlTableRows = htmlTableRows + "<tr><td>"+testSummary+"</td><td bgcolor='"+cellColorRed+"'>FAIL</td></tr>";
+			file.format("%d,%s,PASS\n", tcCount, testSummary);
+			htmlTableRows = htmlTableRows + "<tr><td>" + tcCount + "</td><td>" + testSummary + "</td><td bgcolor='"
+					+ cellColorGreen + "'>PASS</td></tr>";
+			nPassed++;
+		} else {
+			file.format("%d,%s,FAIL\n", tcCount, testSummary);
+			htmlTableRows = htmlTableRows + "<tr><td>" + tcCount + "</td><td>" + testSummary + "</td><td bgcolor='"
+					+ cellColorRed + "'>FAIL</td></tr>";
+			nFailed++;
 		}
 		file.close();
 
 	}
-	
+
 	public static void generateHTMLReport() {
+		htmlFooter = "</table>" + "<br><br><h2 align='center'>Summary</h2><center><b>Passed: " + nPassed
+				+ "<br>Failed: " + nFailed + "<br>Blocked: " + nBlocked + "<b></center>"
+				+ "<div id='piechart' align='center'></div>\n"
+				+ "<script type='text/javascript' src=\"https://www.gstatic.com/charts/loader.js\"></script>\n"
+				+ "<script type='text/javascript'>\n" + "google.charts.load('current', {'packages':['corechart']});\n"
+				+ "google.charts.setOnLoadCallback(drawChart);\n" + "function drawChart() {\n"
+				+ "  var data = google.visualization.arrayToDataTable([\n" + "  ['Status', 'PASS/FAIL/BLOCKED'],\n"
+				+ "  ['PASS', " + nPassed + "],\n" + "  ['FAIL', " + nFailed + "],\n" + "  ['BLOCKED', " + nBlocked
+				+ "]\n" + "]);\n" + "\n"
+				+ "  var options = {'legend':{position: 'right', alignment: 'center', textStyle: {color: 'default', fontSize: 12}},\n"
+				+ "  'width':650, \n" + "  'height':400, \n" + "  'colors': ['" + cellColorGreen + "', '" + cellColorRed
+				+ "', '" + cellColorGrey + "']};\n" + "\n"
+				+ "  var chart = new google.visualization.PieChart(document.getElementById('piechart'));\n"
+				+ "  chart.draw(data, options);\n" + "}\n" + "</script>" + "</body>" + "</html>";
 		try {
 			f = new FileWriter(htmlFilePath, false);
 			file = new Formatter(f);
