@@ -1,4 +1,4 @@
-"Validating page title",PASS
-"Validating images link text",PASS
-"Validating presence of google drive link on google.com page",FAIL
-"Checking the presence of doodle on google.com page",BLOCKED
+1,Validating page title,PASS
+2,Validating images link text,PASS
+3,Validating presence of google drive link on google.com page,FAIL
+4,Checking the presence of doodle on google.com page,BLOCKED
